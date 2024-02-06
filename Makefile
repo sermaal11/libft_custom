@@ -6,7 +6,7 @@
 #    By: sergio <sergio@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/21 18:06:40 by sergio            #+#    #+#              #
-#    Updated: 2024/01/23 13:35:08 by sergio           ###   ########.fr        #
+#    Updated: 2024/02/06 18:04:20 by sergio           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -134,6 +134,20 @@ fclean: clean
 # La regla re elimina todo y compila nuevamente
 re: fclean all
 
+# La regla git agrega, hace commit y hace push
+git:
+	git add .
+	git status
+	@read -p "Quieres continuar? [y/n]: " answer; \
+	if [ "$$answer" = "y" ]; then \
+		read -p "Mensaje para el commit: " message; \
+		git commit -m "$$message"; \
+		git push; \
+		@echo "$(BOLD_GREEN)(⌐■_■) ¡¡¡Git push realizado!!! (⌐■_■)$(RESET)"; \
+	else \
+		echo "$(BOLD_RED)(҂◡_◡) ¡¡¡Git push no realizado (҂◡_◡)!!!$(RESET)"; \
+	fi
+
 # La regla .PHONY indica que no hay un archivo llamado all, clean, fclean o re
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re git
 #------------------------------------------------------------------------------#
